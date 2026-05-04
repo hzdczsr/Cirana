@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cirana - 智能工具</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="ui-refresh.css">
+</head>
+<body>
+    <button class="mobile-menu-btn" onclick="toggleSidebar()" aria-label="打开导航">☰</button>
+    <div class="sidebar-overlay" onclick="toggleSidebar()"></div>
+    
+    <div class="app-container">
+        <aside class="sidebar" id="sidebar">
+            <div class="logo-section">
+                <img src="https://cdn.luogu.com.cn/upload/image_hosting/4xjuxh32.png" alt="Cirana Logo" class="logo-img">
+                <div class="logo-copy">
+                    <span class="logo-text">Cirana</span>
+                    <span class="logo-subtext">Useful Tools Workspace</span>
+                </div>
+            </div>
+            
+            <nav class="nav-menu">
+                <div class="nav-item active" onclick="switchTab('home', this)">
+                    <div class="nav-icon">🏠</div>
+                    <span id="nav-home">主页</span>
+                </div>
+                <div class="nav-item" onclick="switchTab('chat', this)">
+                    <div class="nav-icon">💬</div>
+                    <span id="nav-chat">AI 对话</span>
+                </div>
+                <div class="nav-item" onclick="switchTab('ai-taste', this)">
+                    <div class="nav-icon">🚀</div>
+                    <span id="nav-ai-taste">AI 尝鲜</span>
+                </div>
+                <div class="nav-item" onclick="switchTab('tools', this)">
+                    <div class="nav-icon">🛠️</div>
+                    <span id="nav-tools">实用工具</span>
+                </div>
+                <div class="nav-item" onclick="switchTab('reading', this)">
+                    <div class="nav-icon">📖</div>
+                    <span id="nav-reading">早读助手</span>
+                </div>
+                <div class="nav-item" onclick="switchTab('settings', this)">
+                    <div class="nav-icon">⚙️</div>
+                    <span id="nav-settings">设置</span>
+                </div>
+            </nav>
+        </aside>
+        
+        <main class="main-content">
+            <div class="header">
+                <div class="header-copy">
+                    <p class="header-kicker">CIRANA PRODUCT SUITE</p>
+                    <h1 class="header-title" id="page-title">AI 对话</h1>
+                </div>
+                <div class="header-actions">
+                    <div class="model-selector">
+                        <button class="model-btn" onclick="toggleModelDropdown()">
+                            <span class="model-icon" id="model-icon"><img src="https://openrouter.ai/images/icons/Qwen.png" alt="Qwen" style="width:20px;height:20px;border-radius:4px;"></span>
+                            <span id="model-name">Qwen 3 Next</span>
+                        </button>
+                        <div class="model-dropdown" id="model-dropdown">
+                            <div class="model-option selected" onclick="selectModel('openrouter|qwen', this)">
+                                <span class="model-option-icon"><img src="https://openrouter.ai/images/icons/Qwen.png" alt="Qwen" style="width:24px;height:24px;border-radius:4px;"></span>
+                                <div class="model-option-info">
+                                    <div class="model-option-name">
+                                        Qwen 3 Next
+                                    </div>
+                                    <div class="model-option-desc">高性能模型，擅长各种任务</div>
+                                </div>
+                                <span class="model-option-check">✓</span>
+                            </div>
+                            <div class="model-option" onclick="selectModel('openrouter|gemma', this)">
+                                <span class="model-option-icon"><img src="https://openrouter.ai/images/icons/GoogleGemini.svg" alt="Gemma" style="width:24px;height:24px;border-radius:4px;"></span>
+                                <div class="model-option-info">
+                                    <div class="model-option-name">
+                                        Gemma 4
+                                    </div>
+                                    <div class="model-option-desc">Google模型，擅长推理</div>
+                                </div>
+                                <span class="model-option-check">✓</span>
+                            </div>
+                            <div class="model-option" onclick="selectModel('zhipu|glm-4.7-flash', this)">
+                                <span class="model-option-icon"><img src="https://z-cdn.chatglm.cn/z-ai/static/logo.svg" alt="GLM" style="width:24px;height:24px;border-radius:4px;"></span>
+                                <div class="model-option-info">
+                                    <div class="model-option-name">
+                                        GLM 4.7 Flash
+                                        <span class="model-tag streaming-tag">流式调用</span>
+                                    </div>
+                                    <div class="model-option-desc">智谱AI 最新模型，快速响应</div>
+                                </div>
+                                <span class="model-option-check">✓</span>
+                            </div>
+                            <div class="model-option" onclick="selectModel('zhipu|glm-4.6v-flash', this)">
+                                <span class="model-option-icon"><img src="https://z-cdn.chatglm.cn/z-ai/static/logo.svg" alt="GLM" style="width:24px;height:24px;border-radius:4px;"></span>
+                                <div class="model-option-info">
+                                    <div class="model-option-name">
+                                        GLM 4.6V Flash
+                                        <span class="model-tag multimodal-tag">多模态理解</span>
+                                    </div>
+                                    <div class="model-option-desc">智谱AI 多模态模型，支持图片视频</div>
+                                </div>
+                                <span class="model-option-check">✓</span>
+                            </div>
+                            <div class="model-option" onclick="selectModel('zhipu|glm-4v-flash', this)">
+                                <span class="model-option-icon"><img src="https://z-cdn.chatglm.cn/z-ai/static/logo.svg" alt="GLM" style="width:24px;height:24px;border-radius:4px;"></span>
+                                <div class="model-option-info">
+                                    <div class="model-option-name">
+                                        GLM-4V-Flash
+                                        <span class="model-tag streaming-tag">流式调用</span>
+                                        <span class="model-tag multimodal-tag">多模态理解</span>
+                                    </div>
+                                    <div class="model-option-desc">智谱AI 多模态模型，支持图片和流式输出</div>
+                                </div>
+                                <span class="model-option-check">✓</span>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn btn-secondary" onclick="clearChat()" id="btn-clear">清空对话</button>
+                    <button class="btn btn-primary" id="btn-new">新对话</button>
+                </div>
+            </div>
+            
+            <div class="chat-container" id="main-area">
+                <div class="messages-container" id="messages-container">
+                    <div class="welcome-screen" id="welcome-screen">
+                        <section class="welcome-shell">
+                            <div class="welcome-main">
+                                <span class="welcome-badge">智能工作台</span>
+                                <h2 class="welcome-title" id="welcome-title">欢迎使用 Cirana</h2>
+                                <p class="welcome-subtitle" id="welcome-subtitle">
+                                    面向学习、创作与效率场景的一站式工具工作区，
+                                    强调清晰、稳定、专业的交互体验。
+                                </p>
+                                <div class="quick-actions">
+                                    <button class="quick-action" onclick="sendQuickMessage('帮我写一个Python脚本')" id="quick-python">
+                                        写 Python 脚本
+                                    </button>
+                                    <button class="quick-action" onclick="sendQuickMessage('解释一下量子计算')" id="quick-science">
+                                        科普知识
+                                    </button>
+                                    <button class="quick-action" onclick="sendQuickMessage('帮我优化这段代码')" id="quick-optimize">
+                                        代码优化
+                                    </button>
+                                    <button class="quick-action" onclick="sendQuickMessage('写一封商务邮件')" id="quick-email">
+                                        商务写作
+                                    </button>
+                                </div>
+                            </div>
+                            <aside class="welcome-panel">
+                                <div class="panel-caption">核心能力</div>
+                                <div class="feature-list">
+                                    <div class="feature-item">
+                                        <span class="feature-index">01</span>
+                                        <div>
+                                            <h3>智能对话</h3>
+                                            <p>快速处理问答、创作、方案整理与分析任务。</p>
+                                        </div>
+                                    </div>
+                                    <div class="feature-item">
+                                        <span class="feature-index">02</span>
+                                        <div>
+                                            <h3>多种工具</h3>
+                                            <p>将计算、转换、编辑和实验能力集中到一个界面。</p>
+                                        </div>
+                                    </div>
+                                    <div class="feature-item">
+                                        <span class="feature-index">03</span>
+                                        <div>
+                                            <h3>稳定工作流</h3>
+                                            <p>从输入、响应到设置管理，保持统一而顺滑的体验。</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </aside>
+                        </section>
+                    </div>
+                </div>
+                
+                <div class="input-container" id="input-container">
+                    <div class="uploaded-files" id="uploaded-files" style="display: none;"></div>
+                    <div class="file-upload-area" id="file-upload-area" style="display: none;">
+                        <input type="file" id="file-input" multiple accept="image/*,video/*,text/*,.pdf,.doc,.docx" onchange="handleFileSelect(event)">
+                        <button class="add-file-btn" onclick="document.getElementById('file-input').click()">
+                            📎 添加文件
+                        </button>
+                        <span class="supported-files-hint">支持：图片、视频、文本、文档</span>
+                    </div>
+                    <div class="input-wrapper">
+                        <textarea 
+                            class="input-field" 
+                            id="message-input" 
+                            placeholder="输入您的问题..." 
+                            rows="1"
+                            onkeydown="handleKeyDown(event)"
+                        ></textarea>
+                        <button class="send-btn" id="send-btn" onclick="sendMessage()">➤</button>
+                    </div>
+                </div>
+                
+                <!-- 主页 -->
+                <div class="home-container" id="home-container" style="display: none;">
+                    <div class="home-hero">
+                        <div class="home-hero-badge">智能工作台</div>
+                        <h1 class="home-hero-title">欢迎使用 Cirana</h1>
+                        <p class="home-hero-subtitle">
+                            面向学习、创作与效率场景的一站式工具工作区，<br>
+                            强调清晰、稳定、专业的交互体验。
+                        </p>
+                    </div>
+                    
+                    <div class="home-features">
+                        <div class="home-feature-card" onclick="switchTab('chat', document.querySelectorAll('.nav-item')[1])">
+                            <div class="feature-card-icon">💬</div>
+                            <h3>AI 对话</h3>
+                            <p>快速处理问答、创作、方案整理与分析任务</p>
+                            <div class="feature-card-arrow">→</div>
+                        </div>
+                        <div class="home-feature-card" onclick="switchTab('tools', document.querySelectorAll('.nav-item')[2])">
+                            <div class="feature-card-icon">🛠️</div>
+                            <h3>实用工具</h3>
+                            <p>计算、转换、编辑和互动实验能力集中界面</p>
+                            <div class="feature-card-arrow">→</div>
+                        </div>
+                        <div class="home-feature-card" onclick="switchTab('reading', document.querySelectorAll('.nav-item')[3])">
+                            <div class="feature-card-icon"></div>
+                            <h3>早读助手</h3>
+                            <p>分贝检测、种树激励、计时阅读的早读工具</p>
+                            <div class="feature-card-arrow">→</div>
+                        </div>
+                    </div>
+                    
+                    <div class="home-quick-start">
+                        <h2>快速开始</h2>
+                        <div class="quick-start-grid">
+                            <button class="quick-start-btn" onclick="switchTab('chat', document.querySelectorAll('.nav-item')[1]); setTimeout(() => sendQuickMessage('帮我写一个Python脚本'), 300);">
+                                <span class="quick-start-icon">🐍</span>
+                                <div>
+                                    <span class="quick-start-title">写 Python 脚本</span>
+                                    <span class="quick-start-desc">快速生成代码</span>
+                                </div>
+                            </button>
+                            <button class="quick-start-btn" onclick="switchTab('chat', document.querySelectorAll('.nav-item')[1]); setTimeout(() => sendQuickMessage('解释一下量子计算'), 300);">
+                                <span class="quick-start-icon">🔬</span>
+                                <div>
+                                    <span class="quick-start-title">科普知识</span>
+                                    <span class="quick-start-desc">学习新领域</span>
+                                </div>
+                            </button>
+                            <button class="quick-start-btn" onclick="switchTab('chat', document.querySelectorAll('.nav-item')[1]); setTimeout(() => sendQuickMessage('帮我优化这段代码'), 300);">
+                                <span class="quick-start-icon">💡</span>
+                                <div>
+                                    <span class="quick-start-title">代码优化</span>
+                                    <span class="quick-start-desc">提升代码质量</span>
+                                </div>
+                            </button>
+                            <button class="quick-start-btn" onclick="switchTab('chat', document.querySelectorAll('.nav-item')[1]); setTimeout(() => sendQuickMessage('写一封商务邮件'), 300);">
+                                <span class="quick-start-icon">✉️</span>
+                                <div>
+                                    <span class="quick-start-title">商务写作</span>
+                                    <span class="quick-start-desc">专业文档</span>
+                                </div>
+                            </button>
+                            <button class="quick-start-btn" onclick="switchTab('tools', document.querySelectorAll('.nav-item')[2]); setTimeout(() => renderTextEditor(), 300);">
+                                <span class="quick-start-icon">📝</span>
+                                <div>
+                                    <span class="quick-start-title">文本编辑</span>
+                                    <span class="quick-start-desc">格式化文档</span>
+                                </div>
+                            </button>
+                            <button class="quick-start-btn" onclick="switchTab('tools', document.querySelectorAll('.nav-item')[2]); setTimeout(() => renderCalculator(), 300);">
+                                <span class="quick-start-icon">🧮</span>
+                                <div>
+                                    <span class="quick-start-title">计算器</span>
+                                    <span class="quick-start-desc">数学运算</span>
+                                </div>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="home-stats">
+                        <div class="stat-card">
+                            <div class="stat-number">4+</div>
+                            <div class="stat-label">核心模块</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">∞</div>
+                            <div class="stat-label">使用次数</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">24/7</div>
+                            <div class="stat-label">全天候可用</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">0</div>
+                            <div class="stat-label">广告打扰</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 早读助手 -->
+                <div class="tools-container" id="tools-reading">
+                    <div class="reading-container" id="reading-container">
+                        <div class="reading-header">
+                            <h2>📖 早读助手</h2>
+                            <div class="reading-header-actions">
+                                <button class="btn btn-secondary reading-btn" onclick="toggleFullscreen('reading')" id="reading-fullscreen-btn">
+                                    ️ 全屏模式
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="reading-content">
+                            <!-- 左侧：设置和计时 -->
+                            <div class="reading-left-panel">
+                                <div class="reading-config">
+                                    <div class="config-group">
+                                        <label class="config-label">⏱️ 阅读时长（分钟）</label>
+                                        <input type="number" class="config-input" id="reading-duration" value="20" min="1" max="120">
+                                    </div>
+                                    <div class="config-group">
+                                        <label class="config-label">🔊 分贝阈值</label>
+                                        <input type="range" class="config-range" id="db-threshold" min="30" max="100" value="60">
+                                        <span class="config-value" id="db-threshold-display">60 dB</span>
+                                    </div>
+                                    <div class="config-group">
+                                        <label class="config-label">🌱 声音超标持续时间（秒）</label>
+                                        <input type="number" class="config-input" id="loud-duration" value="5" min="1" max="30">
+                                    </div>
+                                    <div class="config-actions">
+                                        <button class="btn btn-primary reading-btn-lg" id="start-reading-btn" onclick="startReading()">
+                                            🚀 开始早读
+                                        </button>
+                                        <button class="btn btn-secondary reading-btn" id="pause-reading-btn" onclick="pauseReading()" style="display: none;">
+                                            ️ 暂停
+                                        </button>
+                                        <button class="btn btn-secondary reading-btn" id="reset-reading-btn" onclick="resetReading()" style="display: none;">
+                                            🔄 重置
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <!-- 倒计时显示 -->
+                                <div class="timer-display" id="timer-display">
+                                    <div class="timer-circle">
+                                        <svg class="timer-svg" viewBox="0 0 200 200">
+                                            <circle class="timer-bg" cx="100" cy="100" r="90" fill="none" stroke="#e2e8f0" stroke-width="8"/>
+                                            <circle class="timer-progress" cx="100" cy="100" r="90" fill="none" stroke="#6366f1" stroke-width="8" 
+                                                stroke-dasharray="565.49" stroke-dashoffset="0" stroke-linecap="round"/>
+                                        </svg>
+                                        <div class="timer-text">
+                                            <span class="timer-time" id="timer-time">20:00</span>
+                                            <span class="timer-label" id="timer-label">准备开始</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- 右侧：分贝检测 -->
+                            <div class="reading-right-panel">
+                                <div class="db-meter-container">
+                                    <h3>🎤 实时分贝检测</h3>
+                                    <div class="db-visual">
+                                        <canvas id="db-canvas" width="300" height="200"></canvas>
+                                    </div>
+                                    <div class="db-info">
+                                        <div class="db-current">
+                                            <span class="db-value" id="db-current">0</span>
+                                            <span class="db-unit">dB</span>
+                                        </div>
+                                        <div class="db-stats">
+                                            <div class="stat-item">
+                                                <span class="stat-label">最大</span>
+                                                <span class="stat-value" id="db-max">0</span>
+                                            </div>
+                                            <div class="stat-item">
+                                                <span class="stat-label">平均</span>
+                                                <span class="stat-value" id="db-avg">0</span>
+                                            </div>
+                                            <div class="stat-item">
+                                                <span class="stat-label">超标时间</span>
+                                                <span class="stat-value" id="loud-time">0s</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- 种树计数 -->
+                                <div class="trees-container">
+                                    <h3>🌳 我的森林</h3>
+                                    <div class="trees-display" id="trees-display">
+                                        <span class="trees-count">0</span>
+                                        <span class="trees-label">棵树</span>
+                                    </div>
+                                    <div class="trees-grid" id="trees-grid"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-creator">
+                <a href="https://www.douyin.com/user/MS4wLjABAAAA8BfAgvVw7iGKhxM99KcGquAz1AGjDT6rbiIA3iiIQVk" target="_blank" class="creator-link">
+                    <img src="https://cdn.luogu.com.cn/upload/image_hosting/jp4gbkvi.png" alt="Creator Avatar" class="creator-avatar">
+                    <span class="creator-text">Made by 张晟睿</span>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
